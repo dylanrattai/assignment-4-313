@@ -1,1 +1,49 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global Styles - Expense Tracker */
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background-color: #f0f2f5;
+}
+
+/* Smooth transitions */
+* {
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+/* Card polish */
+.card {
+  border-radius: 12px !important;
+}
+
+/* Navbar active link */
+.navbar .nav-link {
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+/* Form controls */
+.form-control:focus,
+.form-select:focus {
+  border-color: #4e73df;
+  box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+}
+
+/* Subtle badge for amount levels */
+.bg-danger-subtle  { background-color: #fff0f0 !important; }
+.bg-warning-subtle { background-color: #fffbea !important; }
+.bg-success-subtle { background-color: #f0fff4 !important; }
+
+/* Alert animations */
+.alert {
+  animation: fadeInDown 0.3s ease;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Progress bar */
+.progress {
+  border-radius: 4px;
+}

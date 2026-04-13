@@ -1,0 +1,111 @@
+<div class="container py-4" style="max-width: 580px;">
+
+  <div class="mb-4">
+    <a routerLink="/" class="text-decoration-none text-muted small">
+      <i class="bi bi-arrow-left me-1"></i>Back to Dashboard
+    </a>
+  </div>
+
+  <div class="card border-0 shadow-sm">
+    <div class="card-header bg-primary text-white py-3">
+      <h5 class="mb-0 fw-bold"><i class="bi bi-plus-circle me-2"></i>Add New Expense</h5>
+    </div>
+    <div class="card-body p-4">
+
+      @if (successMsg()) {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <i class="bi bi-check-circle me-2"></i>{{ successMsg() }}
+          <button type="button" class="btn-close" (click)="successMsg.set('')"></button>
+        </div>
+      }
+
+      <!-- Title -->
+      <div class="mb-3">
+        <label class="form-label fw-semibold">
+          Title <span class="text-danger">*</span>
+        </label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="e.g. Coffee, Rent, Flight..."
+          [(ngModel)]="title"
+          [class.is-invalid]="submitted && !title.trim()"
+        />
+        @if (submitted && !title.trim()) {
+          <div class="invalid-feedback">Title is required.</div>
+        }
+      </div>
+
+      <!-- Amount -->
+      <div class="mb-3">
+        <label class="form-label fw-semibold">
+          Amount ($) <span class="text-danger">*</span>
+        </label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-currency-dollar"></i></span>
+          <input
+            type="number"
+            class="form-control"
+            placeholder="0.00"
+            min="0"
+            step="0.01"
+            [(ngModel)]="amount"
+            [class.is-invalid]="submitted && amount <= 0"
+          />
+        </div>
+        @if (submitted && amount <= 0) {
+          <div class="text-danger small mt-1">Amount must be greater than zero.</div>
+        }
+      </div>
+
+      <!-- Category -->
+      <div class="mb-4">
+        <label class="form-label fw-semibold">
+          Category <span class="text-danger">*</span>
+        </label>
+        <select
+          class="form-select"
+          [(ngModel)]="category"
+          [class.is-invalid]="submitted && !category"
+          [style.border-left]="'4px solid ' + getCategoryColor(category)"
+        >
+          <option value="">-- Select a category --</option>
+          @for (cat of svc.categories(); track cat) {
+            <option [value]="cat">{{ cat }}</option>
+          }
+        </select>
+        @if (submitted && !category) {
+          <div class="invalid-feedback">Please select a category.</div>
+        }
+      </div>
+
+      <!-- Live Preview -->
+      @if (category) {
+        <div class="mb-3 p-3 rounded-3 bg-light d-flex align-items-center gap-3">
+          <span class="badge fs-6 px-3 py-2"
+                [style.background-color]="getCategoryColor(category)">
+            {{ category }}
+          </span>
+          <div>
+            <div class="fw-semibold">{{ title || 'Untitled Expense' }}</div>
+            <div class="text-muted small">
+              {{ amount > 0 ? (amount | currency) : '$0.00' }}
+            </div>
+          </div>
+        </div>
+      }
+
+      <!-- Actions -->
+      <div class="d-flex gap-2">
+        <button class="btn btn-primary flex-grow-1" (click)="onSubmit()">
+          <i class="bi bi-check-lg me-1"></i>Add Expense
+        </button>
+        <button class="btn btn-outline-secondary" (click)="onReset()">
+          <i class="bi bi-x-lg me-1"></i>Reset
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>
